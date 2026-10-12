@@ -87,24 +87,5 @@ Copia el resultado en `APP_SESSION_SECRET` del `.env`. Ten en cuenta que **rotar
 
 > ⚠️ **Nunca** subas el `.env` real al repositorio (ni lo pegues en issues/PRs): contiene el hash de la contraseña y el secreto de sesión. Usa `env.example` como plantilla.
 
-#### TODO
-- [ ] support for relative paths
-- [ ] use fs-extra for filesystem operations
-- [ ] use [jsonfile](https://www.npmjs.com/package/jsonfile) for config management
-- [ ] replace exec.util with [execa](https://www.npmjs.com/package/execa)
-- [ ] add form based env management
-- [ ] add realtime logs
-- [ ] add log viewer for deployments
-- [ ] add deployment abort functionality
-- [ ] add deployment triggers
-- [ ] add web terminal
-- [ ] add zero downtime deployment strategies - blue-green, rolling etc
-- [ ] add docker provider*
-
-##### SCREENSHOTS
-![PM2 Webui Login](/screenshots/login.png?raw=true "PM2 WebUI Login")
-![PM2 Webui Dashboard](/screenshots/dashboard.png?raw=true "PM2 WebUI Dashboard")
-![PM2 Webui App](/screenshots/app.png?raw=true "PM2 WebUI App")
-
 ##### LICENSE
-MIT - Copyright (c) 2022 Surya T
+MIT - Copyright (c) 2021 Surya T · Copyright (c) 2026 DonLonjas
