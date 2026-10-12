@@ -26,12 +26,17 @@
     "koa-static": "^5.0.0",
     "koa2-ratelimit": "^0.9.1",
     "pm2": "^5.1.2",
-    "prompts": "^2.4.2"
+    "prompts": "^2.4.2",
+    "yamljs": "^0.3.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/suryamodulus/pm2-webui"
+    "url": "git+https://github.com/DonLonjas/pm2-webui.git"
   },
+  "bugs": {
+    "url": "https://github.com/DonLonjas/pm2-webui/issues/new"
+  },
+  "homepage": "https://github.com/DonLonjas/pm2-webui#readme",
   "bin": {
     "pm2-webui": "./src/app.js"
   },

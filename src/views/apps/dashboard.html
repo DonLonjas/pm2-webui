@@ -1,110 +1,64 @@
-<div class="container-fluid">
-  <div class="row row-deck pt-5">
-    <% apps.forEach(function (app) {%>
-      <div class="col-md-3 mb-5">
-        <div class="card">
-          <div class="card-status-top bg-indigo"></div>
-          <a href="/apps/<%= app.name %>" style="text-decoration: none; color: inherit;">
-            <div class="card-body">
-              <div class="card-title text-primary">
-                <strong>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                    <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline>
-                    <line x1="12" y1="12" x2="20" y2="7.5"></line>
-                    <line x1="12" y1="12" x2="12" y2="21"></line>
-                    <line x1="12" y1="12" x2="4" y2="7.5"></line>
-                  </svg>
-                  <%= app.name %>
-                </strong>
-                <% if(app.status === "online"){ %>
-                  <span class="badge bg-green-lt"><%= app.status %></span>
-                <% } else{ %>  
-                  <span class="badge bg-red-lt"><%= app.status %></span>
-                <% } %>
-              </div>
-              <h4 class="text-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-server" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <rect x="3" y="4" width="18" height="8" rx="3"></rect>
-                  <rect x="3" y="12" width="18" height="8" rx="3"></rect>
-                  <line x1="7" y1="8" x2="7" y2="8.01"></line>
-                  <line x1="7" y1="16" x2="7" y2="16.01"></line>
-                </svg>
-                CPU : <%= app.cpu %> %</h4>
-              <h4 class="text-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-desktop-analytics" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <rect x="3" y="4" width="18" height="12" rx="1"></rect>
-                  <path d="M7 20h10"></path>
-                  <path d="M9 16v4"></path>
-                  <path d="M15 16v4"></path>
-                  <path d="M9 12v-4"></path>
-                  <path d="M12 12v-1"></path>
-                  <path d="M15 12v-2"></path>
-                  <path d="M12 12v-1"></path>
-                </svg>
-                Memory : <%= app.memory %></h4>
-              <h4 class="text-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4"></path>
-                  <circle cx="18" cy="18" r="4"></circle>
-                  <path d="M15 3v4"></path>
-                  <path d="M7 3v4"></path>
-                  <path d="M3 11h16"></path>
-                  <path d="M18 16.496v1.504l1 1"></path>
-                </svg>
-                Uptime : <%= app.uptime %></h4>
+<div class="app-topbar">
+    <div class="d-flex gap-2 align-items-center">
+        <button class="sidebar-toggle" onclick="document.getElementById('appSidebar').classList.toggle('open')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <h1>Applications</h1>
+    </div>
+    <div class="topbar-actions">
+        <a href="/tunnels" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:-3px;"><path d="M21 20h-10a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2z"></path><path d="M6 20v-13a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v13"></path></svg>
+            Configurar Tunnels
+        </a>
+    </div>
+</div>
+
+<div class="app-content">
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:24px;">
+        <% apps.forEach(function (app) { %>
+            <div class="app-card <%= app.status === 'online' ? 'app-card-online' : 'app-card-offline' %>">
+                <a href="/apps/<%= app.name %>" style="text-decoration:none; color:inherit; display:block;">
+                    <div class="app-card-header">
+                        <div class="app-card-name">
+                            <div class="app-card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="8" rx="3"/><rect x="3" y="12" width="18" height="8" rx="3"/><line x1="7" y1="8" x2="7" y2="8.01"/><line x1="7" y1="16" x2="7" y2="16.01"/></svg>
+                            </div>
+                            <%= app.name %>
+                        </div>
+                        <% if(app.status === "online"){ %>
+                            <span class="badge bg-green-lt">● online</span>
+                        <% } else { %>
+                            <span class="badge bg-red-lt">● offline</span>
+                        <% } %>
+                    </div>
+                    <div class="app-card-body">
+                        <div class="app-stat">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--suave)"><rect x="3" y="4" width="18" height="8" rx="3"/><rect x="3" y="12" width="18" height="8" rx="3"/></svg>
+                            <span class="app-stat-label">CPU</span>
+                            <span class="app-stat-value highlight"><%= app.cpu %>%</span>
+                        </div>
+                        <div class="app-stat">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--suave)"><rect x="3" y="4" width="18" height="12" rx="1"/><path d="M7 20h10"/><path d="M9 16v4"/><path d="M15 16v4"/></svg>
+                            <span class="app-stat-label">Memory</span>
+                            <span class="app-stat-value"><%= app.memory %></span>
+                        </div>
+                        <div class="app-stat">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--suave)"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+                            <span class="app-stat-label">Uptime</span>
+                            <span class="app-stat-value"><%= app.uptime %></span>
+                        </div>
+                    </div>
+                </a>
+                <div style="padding:0 20px 20px; display:flex; gap:8px;">
+                    <% if(app.status === "online"){ %>
+                        <button class="btn btn-sm btn-green" style="flex:1" onclick="pm2AppAction('<%= app.name %>', 'reload')">Reload</button>
+                        <button class="btn btn-sm btn-warning" style="flex:1" onclick="pm2AppAction('<%= app.name %>', 'restart')">Restart</button>
+                        <button class="btn btn-sm btn-danger" style="flex:1" onclick="pm2AppAction('<%= app.name %>', 'stop')">Stop</button>
+                    <% } else { %>
+                        <button class="btn btn-sm btn-warning" style="flex:1" onclick="pm2AppAction('<%= app.name %>', 'restart')">Start</button>
+                    <% } %>
+                </div>
             </div>
-          </a>
-          <div class="card-footer text-center">
-            <% if(app.status === "online"){ %>
-              <button class="btn btn-sm btn-green" aria-label="Button" onclick="pm2AppAction('<%= app.name %>', 'reload')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path>
-                  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"></path>
-               </svg>
-               Reload
-              </button>
-              <button class="btn btn-sm btn-cyan" aria-label="Button" onclick="pm2AppAction('<%= app.name %>', 'restart')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rotate-clockwise-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M9 4.55a8 8 0 0 1 6 14.9m0 -4.45v5h5"></path>
-                  <line x1="5.63" y1="7.16" x2="5.63" y2="7.17"></line>
-                  <line x1="4.06" y1="11" x2="4.06" y2="11.01"></line>
-                  <line x1="4.63" y1="15.1" x2="4.63" y2="15.11"></line>
-                  <line x1="7.16" y1="18.37" x2="7.16" y2="18.38"></line>
-                  <line x1="11" y1="19.94" x2="11" y2="19.95"></line>
-               </svg>
-               Restart
-              </button>
-              <button class="btn btn-sm btn-danger" aria-label="Button" onclick="pm2AppAction('<%= app.name %>', 'stop')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <circle cx="12" cy="12" r="9"></circle>
-                  <line x1="9" y1="12" x2="15" y2="12"></line>
-               </svg>
-               Stop
-              </button>
-            <% } else{ %> 
-              <button class="btn btn-sm btn-cyan" aria-label="Button" onclick="pm2AppAction('<%= app.name %>', 'restart')">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rotate-clockwise-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                  <path d="M9 4.55a8 8 0 0 1 6 14.9m0 -4.45v5h5"></path>
-                  <line x1="5.63" y1="7.16" x2="5.63" y2="7.17"></line>
-                  <line x1="4.06" y1="11" x2="4.06" y2="11.01"></line>
-                  <line x1="4.63" y1="15.1" x2="4.63" y2="15.11"></line>
-                  <line x1="7.16" y1="18.37" x2="7.16" y2="18.38"></line>
-                  <line x1="11" y1="19.94" x2="11" y2="19.95"></line>
-               </svg>
-               Restart
-              </button>
-            <% } %>
-          </div>
-        </div>
-      </div>
-    <% })%>
-  </div>
+        <% }) %>
+    </div>
 </div>
